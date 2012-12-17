@@ -6,11 +6,9 @@ FED2.Schedule = Backbone.Collection.extend({
 	
 	// Initialize collection *(backbone method)*
 	initialize: function () {
-		this.logMessage("Schedule collection initialized");
 	},
 	
-	// Log message *(custom method)*
-	logMessage: function (message) {
-		console.log(message);
+	comparator: function(schedule) {
+		return schedule.get('team2');
 	}
 });

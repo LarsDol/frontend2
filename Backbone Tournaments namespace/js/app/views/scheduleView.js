@@ -4,21 +4,23 @@ FED2.ScheduleView = Backbone.View.extend({
 	
 	// Initialize view *(backbone method)*
     initialize: function () {
-		this.logMessage("Schedule view initialized");
-        
 		// Specify collection for this view
 		this.collection = new FED2.Schedule(FED2.scheduleData);
 		
+		filtered = _.filter(this.collection.models, function(data) {
+		  	return data.get("team1") == "Boomsquad";
+		});
+		
 		// Render view
-        this.render();
+        this.render(filtered);
 		
     },
 	
 	// Render view *(backbone method)*
-    render: function () {
+    render: function (data) {
         var self = this;
 
-        _.each(this.collection.models, function (item) {
+        _.each(data, function (item) {
             self.renderSchedule(item);
         }, this);
     },
