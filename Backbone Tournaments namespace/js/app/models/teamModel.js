@@ -4,9 +4,9 @@ FED2.Team = Backbone.Model.extend({
 	defaults: {
 		'date' : 'unknown',
 		'team1' : 'unknown',
-		'team1Score' : 'unknown',
+		'team1Score' : '?',
 		'team2' : 'unknown',
-		'team2Score' : 'unknown'
+		'team2Score' : '?'
 	},
 	
 	// Initialize model *(backbone method)*

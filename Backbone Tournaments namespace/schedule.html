@@ -3,49 +3,59 @@
     <head>
       <meta charset="UTF-8" />
       <title>Backbone.js Web App</title>
-      <link rel="stylesheet" href="css/style.css" />
+      <link rel="stylesheet" href="css/screen.css" />
+      <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
     </head> 
     <body>
-       
-      <header>
-          <h1><span>League:</span>AMSU - 12</h1>
-          <h1><span>Tournament:</span>Threesome</h1>
-      </header>
+      <section id="wrapper"> 
+        <header>
+            <h1><span>League:</span> AMSU - 12</h1>
+            <h1><span>Tournament:</span> Threesome</h1>
+        </header>
       
-    	<article>
-    	  <nav>
-					<ul>
-						<li>
-							<select class="filter">
-								<option value="swiss">Swiss</option>
-								<option value="regular">Regular</option>
-								<option value="unknown">Unknown</option>
-							</select>
-						</li>
-						<li>
-							<a href="#" id="addGame">Voeg wedstrijd toe</a>
-						</li>
-					</ul>
-				</nav>
-				
-    	  <header>
-      	  <h1>Poule A - Schedule</h1>
-      	</header>
-      	<table id="schedule">
-      	  <tr>
-      	    <th>Monday 18 March</th>
-            <th>Team</th>
-            <th>Result</th>
-            <th>Team</th>
-      	  </tr>
-      	</table>
-      </article>	
+      	<article id="schedule">				
+      	  <header>
+        	  <h1>Poule A - Schedule</h1>
+        	</header>
+        	
+        	<nav class="actions">
+  					<ul>
+  						<li id="filter">
+  							<label>First team:</label>
+							
+  						</li>
+  						<li><button id="showForm">Add new tournament</button></li>
+  					</ul>
+  				</nav>
+        	
+        	<table id="games">
+        	  <tr>
+        	    <th>Monday 18 March</th>
+              <th>Team</th>
+              <th>Result</th>
+              <th>Team</th>
+        	  </tr>
+        	
+        	</table>
+      	
+        	<form id="addGame" action="#" class="form-3">
+  					<h1>Add game</h1>
+  				    <label for="team1">Team 1:</label><input id="team1" placeholder="Name first team" type="text" />
+  				    <label for="team1Score">Score team 1:</label><input id="team1Score" placeholder="Score first team" type="text" />
+  				    <label for="team2">Team 2:</label><input id="team2" placeholder="Name second team" type="text" />
+  				    <label for="team2Score">Score team 2:</label><input id="team2Score" placeholder="Score second team" type="text" />
+  				    <label for="date">Time:</label><input id="date" placeholder="for example: Day, 00:00am" type="text" />
+  				    <div class="clearfix"><input type="submit" id="add" value="Add" /></div>
+  				</form>
+        </article>	
+      </section>
 
-      <script id="tournamentTemplate" type="text/template">
-        <td><%= date %></td>
-        <td><%= team1 %></td>
-        <td><%= team1Score %> - <%= team2Score %></td>
-        <td><%= team2 %></td> 
+      <script id="scheduleTemplate" type="text/template">
+        <td id="date"><%= date %></td>
+        <td id="left" <% if( team1Score  > team2Score) { %> class="winner" <% }%> ><%= team1 %></td>
+        <td id="score"><%= team1Score %> - <%= team2Score %></td>
+        <td id="right" <% if( team2Score  > team1Score) { %> class="winner" <% }%> ><%= team2 %></td> 
+        <td id="delete"><p><a href="#" class="delete">Delete</a></p></td>
       </script>
 		
 		  <!-- Libraries -->
