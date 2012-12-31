@@ -121,7 +121,7 @@ ul {
 		color:#fff;
 	}
 	
-nav ul li select option {
+nav ul li select, nav ul li select option {
 	text-transform: capitalize;
 }
 	
