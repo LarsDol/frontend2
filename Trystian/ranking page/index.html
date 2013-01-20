@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  
+  <link href='http://fonts.googleapis.com/css?family=Modern+Antiqua' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/forms.css">
+  
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Leaugevine Tournament Software</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="#/tournament">Tournament</a></li>
+        <li><a href="#/schedule">Schedule</a></li>
+        <li><a href="#/ranking">Ranking</a></li>
+        <li><a href="#/game">Game</a></li>  
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid content">
+  
+    <div class="row-fluid" id="page">
+      <article class="span12">
+          
+      </article><!--/span-->
+    </div><!--/row-->
+
+    <footer>
+      <p>Web application build with <strong>Backbone.js</strong> | <strong>Require.js</strong> | <strong>jQuery</strong> | <strong>Twitter Bootstrap</strong></p>
+    </footer>
+  
+  </div><!--/.fluid-container-->
+
+  <!-- Templates -->
+  <script id="homeTemplate" type="text/template">
+    <article class="span12">
+      <section>
+        <h1>Default</h1>
+        <ul>
+          <li>Trolololol</li>
+        </ul>
+      </section>
+    </article><!--/span-->
+  </script>
+
+  <script id="poolTemplate" type="text/template">
+    <article id="ranking">       
+      <header>
+        <h1>Poule A - Schedule</h1>
+      </header>
+      
+      <nav class="actions">
+        <ul>
+          <li id="filter">
+            <label>First team:</label>
+          
+          </li>
+          <li><button id="showForm">Add new game</button></li>
+        </ul>
+      </nav>
+      
+      <table id="pool" cellspacing="0">
+        <theader>
+          <tr>
+            <th>Monday 18 March</th>
+            <th>Team</th>
+            <th>Result</th>
+            <th>Team</th>
+          </tr>
+        </theader>
+        <tbody id="rankingtable">
+        </tbody>  
+      </table>
+
+      <form id="addGame" action="#" class="form-3">
+        <h1>Add Score</h1>
+        <p><%= formatDate(start_time) %></p>
+          <label for="team1"><%= team_1 %></label> <input id="score_team_1" placeholder="Name first team" type="text" />
+
+          <div class="clearfix"><input type="submit" id="add" value="Add" /></div>
+      </form>
+    </article>  
+  </script>
+  <script id="rankingTemplate" type="text/template">
+    <td id="date"><%= formatDate(start_time) %></td>
+    <td id="left" <% if( team_1_score  > team_2_score) { %> class="winner" <% }%> ><%= team_1.name %></td>
+    <td id="score"><%= team_1_score %> - <%= team_2_score %></td>
+    <td id="right" <% if( team_2_score  > team_1_score) { %> class="winner" <% }%> ><%= team_2.name %></td> 
+    <td id="delete"><p><a href="#" class="delete">Edit Score</a></p></td>
+  </script>
+
+  <script id="scoreForm" type="text/template">
+    <form id="addGame" action="#" class="form-3">
+      <h1>Add Score</h1>
+      <p><%= formatDate(start_time) %></p>
+        <label for="team1"><%= team_1 %></label> <input id="score_team_1" placeholder="Name first team" type="text" />
+
+        <div class="clearfix"><input type="submit" id="add" value="Add" /></div>
+    </form>
+  </script>
+  <!-- Libraries -->
+  <script src="js/libs/jquery/jquery-min.js"></script>
+  <script src="js/libs/bootstrap/bootstrap-min.js"></script>
+  <script src="js/libs/underscore/underscore-min.js"></script>
+  <script src="js/libs/backbone/backbone-optamd3-min.js"></script>
+  <script src="js/libs/XDate/xdate.js"></script>
+
+  <!-- Application -->
+  <script src="js/app/app.js"></script>
+  <script src="js/app/config.js"></script>
+  
+  <!-- Models -->
+  <script src="js/app/models/gameModel.js"></script>
+  <!-- Collections -->
+  <script src="js/app/collections/scheduleCollection.js"></script>
+  <!-- Views -->
+  <script src="js/app/views/home/homeView.js"></script>
+  <script src="js/app/views/ranking/gameView.js"></script>
+  <script src="js/app/views/ranking/poolView.js"></script>
+
+  <script src="js/app/router.js"></script>
+
+
+</body>
+</html>		
