@@ -3,11 +3,10 @@ FED2.ScheduleCollection = Backbone.Collection.extend({
     // Specifiy model for this collection
 	model: FED2.GameModel,
 
-	url: FED2.config.api_url + 'games/?tournament_id=' + FED2.config.tournamentID,
+	url: FED2.config.api_url + 'games/?tournament_id=' + FED2.config.tournamentID + '&limit=200',
 
 	// Parse the relevant data from the data object
     parse: function(data) {
-        console.log("ik heb een object geretourneerd.");
         return data.objects;
         
     },

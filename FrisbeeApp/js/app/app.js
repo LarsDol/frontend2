@@ -7,8 +7,6 @@ FED2.logMessage = function (message) {
 
 var formatDate = function (date) {
 	var d = new Date(date);
-//	d= d.toString("MMMM dd, yyyy");
-	console.log(d);
 
 	var d_day = d.getDay();
 	var d_hours = d.getHours();

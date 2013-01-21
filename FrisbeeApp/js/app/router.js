@@ -3,6 +3,7 @@ FED2.AppRouter = Backbone.Router.extend({
 	routes: {
 		// Define some URL routes
 		'schedule': 'showSchedule',
+		'ranking': 'showRanking',
 		// Default
 		'*path': 'defaultAction'
 	},
@@ -14,6 +15,16 @@ FED2.AppRouter = Backbone.Router.extend({
 		FED2.schedule.render();
 
 		console.log("showSchedule triggered");
+
+	},
+
+	showRanking: function () {
+		// Call render on the module we loaded in via the dependency array
+		var teamModel = new FED2.TeamModel();
+		FED2.ranking = new FED2.PoolView({model: teamModel});
+		FED2.ranking.render();
+
+		console.log("showRanking triggered");
 
 	},
 

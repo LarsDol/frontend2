@@ -1,14 +1,14 @@
-FED2.ScheduleView = Backbone.View.extend({
+FED2.PoolView = Backbone.View.extend({
 	el: $("#page"),
 
-	template: $("#scheduleTemplate").html(),
+	template: $("#poolTemplate").html(),
 
 	initialize: function() {
         // Capture the scope of this object (aView) in a local variable 
         var self = this;
 
         // Instantiate a new collection
-        this.collection = new FED2.ScheduleCollection();
+        this.collection = new FED2.PoolCollection();
 
         // Fetch data from the API, this is a "GET" request
         this.collection.fetch({
@@ -16,12 +16,12 @@ FED2.ScheduleView = Backbone.View.extend({
             success: function(data) {
                 // Loop through the fetched models 
                 _.each(self.collection.models, function(model){
-                	console.log("model data: ", model.toJSON());
-                    console.log("model: ", model);
+                	//console.log("model data: ", model.toJSON());
+                    
                     // Set the url for each model
                     model.url = model.get('resource_uri');
-                    console.log(model.url);
-                    self.renderGame(model);
+                    //console.log(model.url);
+                    self.renderTeam(model);
                 });
                 // Call the addTournament method
                 //self.addTournament();
@@ -42,13 +42,15 @@ FED2.ScheduleView = Backbone.View.extend({
     },
 	
 	// Render Schedule *(custom method)*
-    renderGame: function (item) {
+    renderTeam: function (item) {
+    	//console.log("test")
+    	//console.log(item.toJSON(	));
 		// Create new instance of TournamentView
-		var gameView = new FED2.GameView({
+		var teamView = new FED2.TeamView({
             model: item
         });
 		// Append the rendered HTML to the views element
-        this.list.append(gameView.render().el);
+        this.list.append(teamView.render().el);
     },
 
     editGame: function(){

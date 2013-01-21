@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  
+  <link href='http://fonts.googleapis.com/css?family=Modern+Antiqua' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/app.css">
+  
+</head>
+<body>
+
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="#">Frisbee App</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li><a href="#/tournament">Tournament</a></li>
+            <li><a href="#/schedule">Schedule</a></li>
+            <li><a href="#/ranking">Ranking</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid content">
+  
+    <div class="row-fluid" id="page">
+      <article class="span12">
+          
+      </article><!--/span-->
+    </div><!--/row-->
+
+    <footer>
+      <p>Es el footér</p>
+    </footer>
+  
+  </div><!--/.fluid-container-->
+
+  <!-- Templates -->
+
+  <!-- HOME -->
+  <script id="homeTemplate" type="text/template">
+    <article class="span12">
+      <section>
+        <h1>Default</h1>
+        <ul>
+          <li>Trolololol</li>
+        </ul>
+      </section>
+    </article><!--/span-->
+  </script>
+
+  <!-- SCHEDULE -->
+  <script id="scheduleTemplate" type="text/template">
+    <article id="schedule">       
+      <header>
+        <h1>Schedule</h1>
+      </header>
+      
+      <nav class="actions">
+        <ul>
+          <li id="filter">
+            <label>First team:</label>
+          
+          </li>
+        </ul>
+      </nav>
+
+
+      <ul id="gamestable">
+        <li class="game_heading">Games, pool X.</li>
+        <li class="loading">
+          <div class="loader_container">
+            <div class="loader"></div>
+          </div>
+          <div class="load_text">Loading games...</div>
+        </li>
+      </ul>
+    </article>  
+  </script>
+ 
+  <script id="gameTemplate" type="text/template">
+    <div class="game_row">
+      <div class="time">
+        <span><%= formatDate(start_time) %></span>
+      </div>
+      <div class="team_row">
+        <div class="team">
+          <p <% if( team_1_score  > team_2_score) { %> class="winner" <% }%>>
+            <%= team_1.name %>
+          </p>
+        </div>
+        <div class="score">
+          <p>
+            <%= team_1_score %>
+          </p>
+        </div>
+      </div>
+
+      <div class="team_row">
+        <div class="team">
+          <p <% if( team_2_score  > team_1_score) { %> class="winner" <% }%>>
+            <%= team_2.name %>
+          </p>
+        </div>
+        <div class="score">
+          <p>
+            <%= team_2_score %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- RANKING -->
+  <script id="poolTemplate" type="text/template">
+    <article id="ranking">       
+      <header>
+        <h1>Ranking</h1>
+      </header>
+      
+      <nav class="actions">
+        <ul>
+          <li id="filter">
+            <label>First team:</label>
+          
+          </li>
+        </ul>
+      </nav>
+
+
+      <ul id="gamestable">
+        <li class="game_heading">Pool D</li>
+        <li class="loading">
+          <div class="loader_container">
+            <div class="loader"></div>
+          </div>
+          <div class="load_text">Loading ranking...</div>
+        </li>
+      </ul>
+    </article> 
+  </script>
+
+  <!-- SCORE FORM -->
+  <script id="scoreForm" type="text/template">
+    <form id="editGame" action="#" class="form-3">
+      <h1>Add Score</h1>
+      <p><%= formatDate(start_time) %></p>
+        <label for="team1"><%= team_1 %></label> <input id="team_1_score" placeholder="Name first team" type="text" />
+
+        <div class="clearfix"><input type="submit" id="update" value="Update" /></div>
+    </form>
+  </script>
+
+  <!-- Libraries -->
+  <script src="js/libs/jquery/jquery-min.js"></script>
+  <script src="js/libs/bootstrap/bootstrap-min.js"></script>
+  <script src="js/libs/underscore/underscore-min.js"></script>
+  <script src="js/libs/backbone/backbone-optamd3-min.js"></script>
+  <script src="js/libs/XDate/xdate.js"></script>
+
+  <!-- Application -->
+  <script src="js/app/app.js"></script>
+  <script src="js/app/config.js"></script>
+  
+  <!-- Models -->
+  <script src="js/app/models/gameModel.js"></script>
+  <script src="js/app/models/teamModel.js"></script>
+  <!-- Collections -->
+  <script src="js/app/collections/scheduleCollection.js"></script>
+  <script src="js/app/collections/poolCollection.js"></script>
+
+  <!-- Views -->
+  <script src="js/app/views/home/homeView.js"></script>
+  <script src="js/app/views/schedule/gameView.js"></script>
+  <script src="js/app/views/schedule/scheduleView.js"></script>
+  <script src="js/app/views/ranking/poolView.js"></script>
+  <script src="js/app/views/ranking/teamView.js"></script>
+
+  <script src="js/app/router.js"></script>
+
+
+</body>
+</html>		
