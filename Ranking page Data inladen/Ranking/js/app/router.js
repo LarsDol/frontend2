@@ -9,9 +9,9 @@ FED2.AppRouter = Backbone.Router.extend({
 
 	showRanking: function () {
 		// Call render on the module we loaded in via the dependency array
-		var gameModel = new FED2.GameModel();
-		FED2.schedule = new FED2.ScheduleView({model: gameModel});
-		FED2.schedule.render();
+		var teamModel = new FED2.TeamModel();
+		FED2.ranking = new FED2.PoolView({model: teamModel});
+		FED2.ranking.render();
 
 		console.log("showSchedule triggered");
 

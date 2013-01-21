@@ -1,9 +1,9 @@
-FED2.GameView = Backbone.View.extend({
+FED2.TeamView = Backbone.View.extend({
     // Define element (this.el)  
 	tagName: "tr",
 	
 	// Set reference to template
-    template: $("#gameTemplate").html(),
+    template: $("#teamTemplate").html(),
 
 	// Initialize view *(backbone method)*
 	initialize: function () {
@@ -23,6 +23,8 @@ FED2.GameView = Backbone.View.extend({
 		// Store template in variable
         var tmpl = _.template(this.template);
 		
+        console.log(this.model.toJSON());
+
 		// Inject the rendered tempate into the views element 
         $(this.el).html(tmpl(this.model.toJSON()));
 
@@ -31,7 +33,7 @@ FED2.GameView = Backbone.View.extend({
 
     showForm: function (e) {
 		e.preventDefault();
-	    FED2.schedule.el.find("#addGame").slideToggle();
+//	    FED2..el.find("#addGame").slideToggle();
 	},
 	// Log message *(custom method)*
 	logMessage: function (message) {

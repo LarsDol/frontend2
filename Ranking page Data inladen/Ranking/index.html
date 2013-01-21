@@ -29,7 +29,7 @@
           <a class="brand" href="#">Leaugevine Tournament Software</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li><a href="#/tournament">Tournament</a></li>
+        <li><a href="#/tournament">Tournament</a></li>
         <li><a href="#/schedule">Schedule</a></li>
         <li><a href="#/ranking">Ranking</a></li>
         <li><a href="#/game">Game</a></li>  
@@ -65,7 +65,7 @@
     </article><!--/span-->
   </script>
 
-  <script id="scheduleTemplate" type="text/template">
+  <script id="poolTemplate" type="text/template">
     <article id="schedule">       
       <header>
         <h1>Poule A - Ranking</h1>
@@ -84,10 +84,13 @@
       <table id="games" cellspacing="0">
         <theader>
           <tr>
-            <th>Monday 18 March</th>
-            <th>Team</th>
-            <th>Result</th>
-            <th>Team</th>
+            <th>Naam</th>
+            <th>Games played</th>
+            <th>Wins</th>
+            <th>Losses</th>
+             <th>Points Scored</th>
+              <th>Points Allowed</th>
+               <th>Saldo</th>
           </tr>
         </theader>
         <tbody id="gamestable">
@@ -103,17 +106,24 @@
       </form>
     </article>  
   </script>
-  <script id="gameTemplate" type="text/template">
+  <script id="teamTemplate" type="text/template">
+
+   <td><%= team.name %></td>
    <td><%= games_played %></td>
-      <td><%= points_allowed %></td>
+   <td><%= wins %></td>
+   <td><%= losses %></td>
+   <td><%= points_scored %></td>
+   <td><%= points_allowed %></td>
+   <td><%= plus_minus %></td>
+
+
      
   </script>
 
   <script id="scoreForm" type="text/template">
     <form id="addGame" action="#" class="form-3">
       <h1>Add Score</h1>
-      <p><%= formatDate(start_time) %></p>
-        <label for="team1"><%= games_played %></label> <input id="score_team_1" placeholder="Name first team" type="text" />
+        <label for="team1"><%= standings.games_played %></label> <input id="score_team_1" placeholder="Name first team" type="text" />
 
         <div class="clearfix"><input type="submit" id="add" value="Add" /></div>
     </form>
@@ -130,13 +140,13 @@
   <script src="js/app/config.js"></script>
   
   <!-- Models -->
-  <script src="js/app/models/gameModel.js"></script>
+  <script src="js/app/models/teamModel.js"></script>
   <!-- Collections -->
-  <script src="js/app/collections/scheduleCollection.js"></script>
+  <script src="js/app/collections/poolCollection.js"></script>
   <!-- Views -->
   <script src="js/app/views/home/homeView.js"></script>
   <script src="js/app/views/schedule/gameView.js"></script>
-  <script src="js/app/views/schedule/scheduleView.js"></script>
+  <script src="js/app/views/schedule/poolView.js"></script>
 
   <script src="js/app/router.js"></script>
 
