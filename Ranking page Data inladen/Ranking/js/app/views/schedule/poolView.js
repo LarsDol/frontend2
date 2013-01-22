@@ -20,7 +20,8 @@ FED2.PoolView = Backbone.View.extend({
                     
                     // Set the url for each model
                     model.url = model.get('resource_uri');
-                    //console.log(model.url);
+
+                    console.log(model.url);
                     self.renderTeam(model);
                 });
                 // Call the addTournament method
@@ -95,7 +96,7 @@ FED2.PoolView = Backbone.View.extend({
 	        this.collection.reset(FED2.scheduleData, { silent: true });
 	        var filterType = this.filterType,
 	            filtered = _.filter(this.collection.models, function (item) {
-	            return item.get("team1").toLowerCase() === filterType;
+	            return item.get("team").toLowerCase() === filterType;
 	        });
 	        this.collection.reset(filtered);
 	    }

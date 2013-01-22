@@ -10,31 +10,35 @@ FED2.PoolCollection = Backbone.Collection.extend({
         console.log("ik heb een object geretourneerd.");
 
         // console.log(data);
-        var poolA;
+       var poolA;
+       var poolB;
+       
+       
+     
+        
+
         _.each(data.objects, function(pool) {
-        	if(pool.name === 'A') {
+        	if(pool.id === 18744) {
         		poolA = pool;
         	}
+        /*	else if(pool.name === 'B'){
+        		poolB = pool;
+        	} */
         });
-
-        poolA = poolA.standings;
-
-        /*
-			we hebben de data van de api vervormd tot en array zoals deze:
-
-			FED2.poolData = [
-				{ team: "Chasing", Win: "2", Lost: "2", Sw: "7", Sl: "9", Pw: "35", Pl: "39"},
-				{ team: "Boomsquad", Win: "2", Lost: "2", Sw: "9", Sl: "8", Pw: "36", Pl: "34"},
-				{ team: "Burning Snow", Win: "3", Lost: "1", Sw: "11", Sl: "4", Pw: "36", Pl: "23"},
-				{ team: "Beast Amsterdam", Win: "2", Lost: "2", Sw: "6", Sl: "8", Pw: "30", Pl: "34"},
-				{ team: "Amsterdam Money Gang", Win: "1", Lost: "3", Sw: "6", Sl: "10", Pw: "30", Pl: "37"}
-			];
-
-        */
-        return poolA;
-
         
+      	poolA = poolA.standings;
+      //	poolB = poolB.standings;
+      //	var poolArray = [poolA, poolB];
+
+      	//console.log("begin")
+      	console.log(poolA);
+      	//console.log("eind")
+      	//return poolArray;
+      	return poolA;
+        console.log("dataobjects")
+        console.log(data.objects);
     },
+       
 /*	
 	comparator: function(schedule) {
 		return schedule.get('start_time');

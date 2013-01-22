@@ -29,14 +29,12 @@ FED2.TeamView = Backbone.View.extend({
         $(this.el).html(tmpl(this.model.toJSON()));
 
 		return this;
+
     },
 
     showForm: function (e) {
 		e.preventDefault();
 //	    FED2..el.find("#addGame").slideToggle();
 	},
-	// Log message *(custom method)*
-	logMessage: function (message) {
-		console.log(message);
-	}
+
 });
