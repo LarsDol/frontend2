@@ -63,8 +63,9 @@ FED2.GameView = Backbone.View.extend({
 		var form_tmpl = _.template(this.formTemplate);
 	//	FED2.schedule.el.find("#")
 		$(".game_row").append(form_tmpl);
+		$(".game_row").css("display", "block");
 
-	//    FED2.schedule.el.find("#editGame").slideToggle();
+	    $(".game_row").find("#editGame").slideToggle();
 	},
 	
 	// Log message *(custom method)*
