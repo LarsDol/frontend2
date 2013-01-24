@@ -16,7 +16,6 @@ FED2.ScheduleView = Backbone.View.extend({
             success: function(data) {
                 // Loop through the fetched models 
                 _.each(self.collection.models, function(model){
-                	console.log("model data: ", model.toJSON());
 
                     // Set the url for each model
                     model.url = model.get('resource_uri');
@@ -74,54 +73,6 @@ FED2.ScheduleView = Backbone.View.extend({
         });
 		// Append the rendered HTML to the views element
         this.list.append(gameView.render().el);
-    },
-
-	updateScore: function(e) {
-		e.preventDefault();
-
-		var gameId = 88505;
-		var url = FED2.config.api_url + "games/";
-
-		var updateModel = {
-			id: gameId
-		};
-
-		$("#editGame").children("input").each(function (i, el) {
-	        if ($(el).val() !== "") {
-	            updateModel[el.id] = $(el).val();
-	      }
-	    });
-
-		console.log(updateModel);
-
-        // Instantiate a new model and stored it in the variable "newModel"
-        // Pass the data to the new model as a parameter
-        var updateModel = new FED2.GameModel(updateModel);
-
-        // Set the API url
-        updateModel.url = url;
-        
-        // Save a new model to the API, this is a "POST" request
-        // the save function takes two parameters,
-        
-        updateModel.save(
-            // The first parameter is the data object
-            updateModel.toJSON(), {
-            // The second parameter takes request options
-            success: function(data) {
-                // On succes set the new url for the model
-             //   newModel.url = newModel.get('resource_uri');
-             console.log("save succesful");
-            },
-            error: function(data) {
-                // On error log the error in the console
-                console.log('error');
-            },
-            // Define an authorization header to allow for posting to the API
-            headers: {
-                Authorization: 'bearer '+ FED2.config.access_token
-            }
-        });
     },
 
 	// Get types for schedulingFormat select box

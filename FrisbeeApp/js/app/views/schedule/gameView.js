@@ -30,30 +30,43 @@ FED2.GameView = Backbone.View.extend({
 	updateScore: function (e) {
 		e.preventDefault();
 
-		var model = {};
-
-		$("#editGame").children("input").each(function (i, el) {
+		$("#game_form").children("input").each(function (i, el) {
 	        if ($(el).val() !== "") {
-	            this.updateModel();
-	      }
+	         //   this.updateModel();
+	      	}
 	    });
 
-		console.log(updateModel);
-
+		this.updateModel();
 	},
 
 	updateModel: function() {
-		var score = $('jouwinput').val();
-		this.model.set('score', score);
+		var score = 4;
+		console.log(this.model);
+		var url = this.model.get('resource_uri');
+		console.log(url);
+
+		this.model.set({'url': url});
+
+
+		this.model.set({'team_1_score': score});
+		console.log('token', FED2.config.access_token);
+		console.log('this.model.attributes', this.model.attributes);
+
 		this.model.save(this.model.toJSON(), {
 			success: function() {
-
+				 console.log("save succesful");
 			}, 
+			error: function(){
+				// On error log the error in the console
+                console.log('error');
+			},
 			headers: {
-
+				Authorization: 'bearer '+ FED2.config.access_token
 			}
 		});
+		console.log("about to render");
 		this.render();
+		console.log("finished");
 	},
 
 	showForm: function (e) {
@@ -67,18 +80,10 @@ FED2.GameView = Backbone.View.extend({
 		if (checker.length > 0){
 		  	$(this.el).find("#editGame").slideToggle();
 			$(this.el).remove("#editGame");
-
-		  	console.log("bestaat");
 		}else{
 			$(this.el).append(formTmpl(this.model.toJSON()));
 			$(this.el).find("#editGame").slideToggle();
-			console.log("bestaat niet");
 		}
-
-
-		console.log("Showing form..");
-
-	//    FED2.schedule.el.find("#editGame").slideToggle();
 	},
 	
 	// Log message *(custom method)*

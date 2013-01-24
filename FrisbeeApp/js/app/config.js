@@ -1,8 +1,7 @@
 FED2.config = {
 
     api_url : "https://api.leaguevine.com/v1/",
-    access_token: '109f8a19ae',
+    access_token: 'e08a55d872',
     tournamentID : 18519,
-    season_id: '20167'
-    
+    season_id: '20167'   
 };
