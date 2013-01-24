@@ -159,13 +159,16 @@
 
   <!-- SCORE FORM -->
   <script id="scoreForm" type="text/template">
-    <form id="editGame" action="#" class="form-3">
-      <h1>Add Score</h1>
+    <section id="addGame">
+
+      <form id="editGame" action="#" class="game_form">
       <p><%= formatDate(start_time) %></p>
-        <label for="team1"><%= team_1 %></label> <input id="team_1_score" placeholder="Name first team" type="text" />
+        <label for="team1"><%= team_1.name %></label> <input id="team_1_score" placeholder="Name first team" type="text" />
 
         <div class="clearfix"><input type="submit" id="update" value="Update" /></div>
-    </form>
+      </form>
+      
+    </section>
   </script>
 
   <!-- Libraries -->

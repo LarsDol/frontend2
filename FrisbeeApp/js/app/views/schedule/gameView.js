@@ -23,7 +23,7 @@ FED2.GameView = Backbone.View.extend({
     },
 
     events: {
-	    "click": "showForm",
+	    "click .game_row": "showForm",
 	    "click #update": "updateScore"
 	},
 	
@@ -57,13 +57,26 @@ FED2.GameView = Backbone.View.extend({
 	},
 
 	showForm: function (e) {
-		console.log("Showing form..");
-		var el = $("body");
-		var form_template = $("#scoreForm").html()
-		console.log(form_template);
+		var el = ".game_row"
 
-	//	FED2.schedule.el.find("#")
-		el.append();
+		var form_template = $("#scoreForm").html();
+		var formTmpl = _.template(form_template);
+
+		var checker = $(this.el).find("#editGame");
+
+		if (checker.length > 0){
+		  	$(this.el).find("#editGame").slideToggle();
+			$(this.el).remove("#editGame");
+
+		  	console.log("bestaat");
+		}else{
+			$(this.el).append(formTmpl(this.model.toJSON()));
+			$(this.el).find("#editGame").slideToggle();
+			console.log("bestaat niet");
+		}
+
+
+		console.log("Showing form..");
 
 	//    FED2.schedule.el.find("#editGame").slideToggle();
 	},
