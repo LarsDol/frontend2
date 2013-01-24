@@ -5,6 +5,7 @@ FED2.GameView = Backbone.View.extend({
 	
 	// Set reference to template
     template: $("#gameTemplate").html(),
+    formTemplate: $("#scoreForm").html(),
 
 	// Initialize view *(backbone method)*
 	initialize: function () {
@@ -58,12 +59,10 @@ FED2.GameView = Backbone.View.extend({
 
 	showForm: function (e) {
 		console.log("Showing form..");
-		var el = $("body");
-		var form_template = $("#scoreForm").html()
-		console.log(form_template);
-
+		var el = $(this);
+		var form_tmpl = _.template(this.formTemplate);
 	//	FED2.schedule.el.find("#")
-		el.append();
+		$(".game_row").append(form_tmpl);
 
 	//    FED2.schedule.el.find("#editGame").slideToggle();
 	},
