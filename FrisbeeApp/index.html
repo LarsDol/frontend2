@@ -158,18 +158,38 @@
   </script>
 
   <!-- SCORE FORM -->
-  <script id="scoreForm" type="text/template">
-    <section id="editGame">
+  <script id="scoreTemplate" type="text/template">
       <form action="#" class="game_form">
-        <span><%= team_1.name %></span>
-        <div class="team1_input"><input id="team_1_score" placeholder="<%= team_1.name %>" type="text" /></div>
-        <span><%= team_1.name %></span>
-        <div class="team2_input"><input id="team_2_score" placeholder="<%= team_2.name %>" type="text" /></div>
+        <table id="scoreTable">
+          <thead>
+            <tr>
+              <td>Set nummer</td>
+              <td id="name_team1"></td>
+              <td id="name_team2"></td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <% _.each(game_sets, function(set){ %>
+              <tr class="set">
+                <td><%= set.number %></td>
+                <td <% if( set.team_1_score > set.team_2_score) { %> class="winner" <% }%>><%= set.team_1_score %></td>
+                <td <% if( set.team_2_score  > set.team_1_score) { %> class="winner" <% }%>><%= set.team_2_score %></td>
+                <td><%= set.is_final %></td>
+              </tr>
+            <% }); %>
+            <% if(game_sets.length < 5){ %>
+              <tr>
+                <td><a id="newSet">Add new set</a></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+
+        <span><%= is_final %></span>
 
         <div class="clearfix"><input type="submit" id="update" value="Update" /></div>
-
       </form>
-    </section>
   </script>
 
   <!-- Libraries -->
@@ -186,14 +206,17 @@
   <!-- Models -->
   <script src="js/app/models/gameModel.js"></script>
   <script src="js/app/models/teamModel.js"></script>
+  <script src="js/app/models/scoreModel.js"></script>
   <!-- Collections -->
   <script src="js/app/collections/scheduleCollection.js"></script>
   <script src="js/app/collections/poolCollection.js"></script>
+  <script src="js/app/collections/scoreCollection.js"></script>
 
   <!-- Views -->
   <script src="js/app/views/home/homeView.js"></script>
   <script src="js/app/views/schedule/gameView.js"></script>
   <script src="js/app/views/schedule/scheduleView.js"></script>
+  <script src="js/app/views/schedule/scoreView.js"></script>
   <script src="js/app/views/ranking/poolView.js"></script>
   <script src="js/app/views/ranking/teamView.js"></script>
 

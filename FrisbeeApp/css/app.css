@@ -130,7 +130,8 @@ li.game_heading{
 	font-size: 110%;
 }
 
-/* Edit score bar */
+/* Scores */
+
 .edit_score{
 	position: fixed;
 	bottom: 0;
@@ -141,7 +142,7 @@ li.game_heading{
 }
 
 /* edit score form */
-section#editGame{
+section.editGame{
 	display: none;
 	width: 100%;
 	margin: 0;
@@ -152,4 +153,19 @@ section#editGame{
 form.game_form{
 	padding: 0;
 	margin: 0;
+}
+
+table#scoreTable{
+	width: 100%;
+}
+
+#scoreTable thead td{
+	font-weight: bold;
+}
+
+#scoreTable tbody td{
+}
+#scoreTable tbody tr.set:last-child{
+	padding: .2em 0;
+	border-top: 1px dashed #333;
 }

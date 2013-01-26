@@ -6,7 +6,8 @@ FED2.ScheduleView = Backbone.View.extend({
 	initialize: function() {
         // Capture the scope of this object (aView) in a local variable 
         var self = this;
-
+        this.scoreCollection = new FED2.ScoreCollection();
+        
         // Instantiate a new collection
         this.collection = new FED2.ScheduleCollection();
 
@@ -73,6 +74,10 @@ FED2.ScheduleView = Backbone.View.extend({
         });
 		// Append the rendered HTML to the views element
         this.list.append(gameView.render().el);
+    },
+
+    renderScore: function (item) {
+
     },
 
 	// Get types for schedulingFormat select box
