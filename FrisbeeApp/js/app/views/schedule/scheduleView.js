@@ -4,10 +4,11 @@ FED2.ScheduleView = Backbone.View.extend({
 	template: $("#scheduleTemplate").html(),
 
 	initialize: function() {
+		FED2.load_checker = false;
         // Capture the scope of this object (aView) in a local variable 
         var self = this;
         this.scoreCollection = new FED2.ScoreCollection();
-        
+
         // Instantiate a new collection
         this.collection = new FED2.ScheduleCollection();
 
@@ -25,8 +26,12 @@ FED2.ScheduleView = Backbone.View.extend({
                 });
 
                 $(".loading").remove();
-                // Call the addTournament method
-                //self.addTournament();
+
+                self.el.find("#filter").append(self.createSelect());
+				
+				// Attach custom event handler
+				self.el.on("change:filterType", self.filterByType, self);
+
                 console.log("succes!");
             },
 
@@ -47,6 +52,10 @@ FED2.ScheduleView = Backbone.View.extend({
 //		this.collection.on("update", this.renderGame, this);
     },
 
+    events: {
+    	"change #filter select": "setFilter"
+    },
+
     // Render view *(backbone method)*
     render: function () {
     	this.el.html(this.template);
@@ -59,14 +68,6 @@ FED2.ScheduleView = Backbone.View.extend({
     	var id = '#' + poolId.toString();
 
     	this.list = this.el.find("#gamestable");
-/*
-    	if ($(id)){
-    		console.log('hallo');
-  			// do something here
-		}else{
-			console.log('hallo2');
-		}
-*/
 
 		// Create new instance of TournamentView
 		var gameView = new FED2.GameView({
@@ -76,20 +77,18 @@ FED2.ScheduleView = Backbone.View.extend({
         this.list.append(gameView.render().el);
     },
 
-    renderScore: function (item) {
-
-    },
-
 	// Get types for schedulingFormat select box
 	getTypes: function () {
-	    return _.uniq(this.collection.pluck("team1"), false, function (type) {
+	    return _.uniq(this.collection.attributes.team_1.pluck('name'), false, function (type) {
+			console.log(type);
 	        return type.toLowerCase();
 	    });
+
 	},
 
 	// Create schedulingFormat select box
 	createSelect: function () {
-	    var filter = this.$el.find("#filter"),
+	    var filter = this.el.find("#filter"),
 	        select = $("<select/>", {
 	            html: "<option value='all'>All</option>"
 	        });
@@ -113,12 +112,12 @@ FED2.ScheduleView = Backbone.View.extend({
 	// Filter the collection
 	filterByType: function () {
 	    if (this.filterType === "all") {
-	        this.collection.reset(FED2.scheduleData);
+	        this.collection.reset(FED2.ScheduleCollection);
 	    } else {
-	        this.collection.reset(FED2.scheduleData, { silent: true });
+	        this.collection.reset(FED2.ScheduleCollection, { silent: true });
 	        var filterType = this.filterType,
 	            filtered = _.filter(this.collection.models, function (item) {
-	            return item.get("team1").toLowerCase() === filterType;
+	            return item.get("team_1.name").toLowerCase() === filterType;
 	        });
 	        this.collection.reset(filtered);
 	    }

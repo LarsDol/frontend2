@@ -5,6 +5,7 @@ FED2.ScoreView = Backbone.View.extend({
 	
 	// Set reference to template
     template: $("#scoreTemplate").html(),
+    setTemplate: $("#setTemplate").html(),
 
 	// Initialize view *(backbone method)*
 	initialize: function () {
@@ -23,84 +24,148 @@ FED2.ScoreView = Backbone.View.extend({
 		return this;
     },
     events: {
-	    "click #update": "updateScore"
+	    "click #update": "saveSet",
+	    "click #newSet": "addSet",
+	    "click #lockSet": "lockSet"
 	},
-	updateScore: function(e) {
-		var self = this;
-		var tournament = {
-            "game_id": 88452,
-		    "team_1_score": 3,
-		    "team_2_score": 2,
+
+	addSet: function(e) {
+		e.preventDefault();
+
+        var set_tmpl = _.template(this.setTemplate);
+
+		$(this.el).find("tbody").append(set_tmpl(this.model.toJSON())).fadeIn();
+
+		var newLength = this.model.attributes.game_sets.length + 1;
+
+		var modelData = {
+            "game_id": this.model.get('game_id'),
 		    "is_final": false,
-		    "set_number": 5
+		    "team_1_score": 0,
+        	"team_2_score": 0,
+		    "set_number": newLength		    
         }
-        
+
+		this.updateScore(modelData, false);
+
+		if(this.model.attributes.game_sets.length == 5){
+			$(this.el).find("#newSet").fadeOut(400, function(){
+				$(this.el).find("#newSet").remove();
+			});
+		}
+
+	},
+
+	saveSet: function(e) {
+		e.preventDefault();
+
+		var finalChecker = this.model.attributes.is_final;
+
+		var sets = this.model.attributes.game_sets;
+		for(var i = 0; i < sets.length; i++){
+			console.log(sets[i]);
+		}
+
+
+		if(finalChecker == false){
+			console.log($(this.el).find);
+
+		}else{
+			console.log('Game score is Final');
+		}	
+
+	},
+
+	lockSet: function(e) {
+		e.preventDefault();
+
+		var finalChecker = this.model.attributes.is_final;
+
+		var setNumber = parseInt($(e.currentTarget).attr('setnumber'));
+
+		if(finalChecker == false){
+
+			$(e.currentTarget).attr('class', 'lock_closed');
+			var superParent = $(e.currentTarget).parent().parent().parent().parent().parent().parent().parent();
+
+			var parent = $(e.currentTarget).parent().parent();
+
+			var team_1_score = parseInt(parent.find("#team_1_score").find("select").val());
+			var team_2_score = parseInt(parent.find("#team_2_score").find("select").val());
+
+			var modelData = {
+	            "game_id": this.model.get('game_id'),
+			    "is_final": true,
+			    "team_1_score": team_1_score,
+	        	"team_2_score": team_2_score,
+			    "set_number": setNumber		    
+	        }
+
+			this.updateScore(modelData);
+
+			parent.find("#team_1_score").html(team_1_score);
+			parent.find("#team_2_score").html(team_2_score);
+
+			if(team_1_score > team_2_score){
+				var newScore = parseInt(superParent.find('.team1_score').text()) + 1;
+				superParent.find('.team1_score').text(newScore);
+			}else if(team_2_score > team_1_score){
+				var newScore = parseInt(superParent.find('.team2_score').text()) + 1;
+				superParent.find('.team2_score').text(newScore);
+			}
+
+		}else{
+			console.log('Game score is Final');
+		}	
+	},
+
+	unlockSet: function(e){
+		e.preventDefault();
+
+		var finalChecker = this.model.attributes.is_final;
+
+		var setNumber = parseInt($(e.currentTarget).attr('setnumber'));
+
+		if(finalChecker == false){
+			var newLength = this.model.attributes.game_sets.length + 1;
+
+			var modelData = {
+	            "game_id": this.model.get('game_id'),
+			    "is_final": false,
+			    "team_1_score": this.model.attributes.game_sets[setNumber-1].team_1_score,
+	        	"team_2_score": this.model.attributes.game_sets[setNumber-1].team_2_score,
+			    "set_number": setNumber		    
+	        }
+
+	        this.updateScore(modelData);
+
+	        console.log('Game unlocked');
+		}else{
+			console.log('Game score is Final');
+		}		
+	},
+
+	updateScore: function(modelData){
+		var self = this;
+		console.log('test', modelData);
         // create a new model by passing properties into the Model() constructor
-        var newModel = new FED2.ScoreModel(tournament);
+        var newModel = new FED2.ScoreModel(modelData);
+        //newModel.push()
         // if we want to POST a new tournament model, we need the api_url
         // see: https://www.leaguevine.com/docs/api/
         newModel.url = 'https://api.leaguevine.com/v1/game_scores/';
 
         newModel.save(newModel.toJSON(), {
             success: function(data) {
-                // when this model is saved, we want to be able to update it
-                // when a model is saved, it gets properties that are returned by the API!
-                // we can log the data that is in the model => console.log(newModel.toJSON);
-               
-                //console.log('model after saving: ', newModel.toJSON()); 
-                
-                //var league_id = newModel.get('season').league_id;
-                //console.log('league id', league_id);
                 newModel.url = newModel.get('resource_uri');
-                console.log("new model completed");
-                console.log("about to render");
-				self.render();
-				console.log("finished");
+                console.log('new model created');
             },
             error: function(data) {
                 console.log('error');
             },
             headers: {
-                // we need to authorize for this.
-                // see the API demo for more info
                 Authorization: 'bearer '+FED2.config.access_token
             }
         });
 	}
-/*
-    updateScore: function(e) {
-    	console.log("updating score..");
-    	
-
-		console.log(this.model);
-		var url = this.model.get('resource_uri');
-		console.log(url);
-		var bool = false;
-
-		this.model.set({'url': url});
-
-
-		this.model.set({'team_1_score': 1});
-		this.model.set({'team_2_score': 4});
-		console.log('token', FED2.config.access_token);
-		console.log('this.model.attributes', this.model.attributes);
-
-		this.model.save(this.model.toJSON(), {
-			success: function() {
-				console.log("save succesful");
-			}, 
-			error: function(){
-				// On error log the error in the console
-                console.log('error');
-			},
-			headers: {
-				Authorization: 'bearer '+ FED2.config.access_token
-			}
-		});
-		console.log("about to render");
-		this.render();
-		console.log("finished");
-		
-	}
-*/
 });

@@ -8,7 +8,7 @@ FED2.TeamModel = Backbone.Model.extend({
 		'games_played' : 'unknown',
 		'points_scored' : '?',
 		'points_allowed' : '?',
-		'plus_minus' : 'roffelstomp'
+		'plus_minus' : '?'
 	}
 	
 });

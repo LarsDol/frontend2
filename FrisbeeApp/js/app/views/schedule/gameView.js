@@ -31,8 +31,6 @@ FED2.GameView = Backbone.View.extend({
    	// Render Schedule *(custom method)*
     renderScore: function (item) {
     	var el = ".game_row";
-    	console.log(item);
-
 
 		// Create new instance of TournamentView
 		var scoreView = new FED2.ScoreView({
@@ -61,13 +59,15 @@ FED2.GameView = Backbone.View.extend({
 		        		//console.log("idmatch:", model.attributes.game_id, self.gameID, "model:", model.attributes);
 		        		model.url = 'https://api.leaguevine.com/v1/game_scores/';
 		        		self.scoreModel = model;
-		        		console.log("model succeeded");
+
+		        		FED2.load_checker = true;
 		        	}
 		        });
+
 	        },
 
 	        error: function(data){
-	        	console.log("error");
+	        	console.log("error loading data");
 	        }
 	    });
     },
@@ -79,27 +79,54 @@ FED2.GameView = Backbone.View.extend({
 	
 	updateScore: function (e) {
 		e.preventDefault();
-
 		console.log("Ready to re-render!");
 	},
 
 
 
 	showForm: function (e) {
-		var checker = $(this.el).find(".editGame");
-		console.log("trolol", this.model);
-		if(this.scoreModel != null){
-			if (checker.length > 0){
-		  		$(this.el).find(".editGame").slideToggle();
-				$(this.el).remove(".editGame");
+		if(FED2.load_checker == true){
+			var checker = $(this.el).find(".editGame");
+			if(this.scoreModel != null){
+				if (checker.length > 0){
+			  		$(this.el).find(".editGame").slideToggle();
+					$(this.el).remove(".editGame");
+				}else{
+					this.renderScore(this.scoreModel);
+					$(this.el).find("#name_team1").text(this.model.attributes.team_1.name);
+			  		$(this.el).find("#name_team2").text(this.model.attributes.team_2.name);
+					$(this.el).find(".editGame").slideToggle();
+				}
 			}else{
-				this.renderScore(this.scoreModel);
-				$(this.el).find("#name_team1").text(this.model.attributes.team_1.name);
-		  		$(this.el).find("#name_team2").text(this.model.attributes.team_2.name);
-				$(this.el).find(".editGame").slideToggle();
+				var set1 = [{
+		        	"is_final": false,
+				    "team_1_score": 0,
+		        	"team_2_score": 0,
+		        	"number": 1 
+		        }];
+
+				var modelData = {
+		            "game_id": this.model.get('id'),
+				    "is_final": false,
+				    "team_1_score": 0,
+		        	"team_2_score": 0,
+		        	"game_sets": set1   
+		        }
+		        console.log(modelData);
+				var newModel = new FED2.ScoreModel(modelData);
+
+				if (checker.length > 0){
+			  		$(this.el).find(".editGame").slideToggle();
+					$(this.el).remove(".editGame");
+				}else{
+					this.renderScore(newModel);
+					$(this.el).find("#name_team1").text(this.model.attributes.team_1.name);
+			  		$(this.el).find("#name_team2").text(this.model.attributes.team_2.name);
+					$(this.el).find(".editGame").slideToggle();
+				}
 			}
-		}else{
-			console.log("hallo");
+		}else if(FED2.load_checker == false){
+			console.log('still loading scores.')
 		}
 
 	}

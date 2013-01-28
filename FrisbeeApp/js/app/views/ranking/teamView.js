@@ -14,9 +14,7 @@ FED2.TeamView = Backbone.View.extend({
 	    "click a.delete": "showForm"
 	},
 
-	editGame: function (e) {
-		console.log('banaan');
-	},
+	
 		
 	// Render view *(backbone method)*
     render: function () {
@@ -30,6 +28,9 @@ FED2.TeamView = Backbone.View.extend({
 
 		return this;
     },
+
+
+     
 
     showForm: function (e) {
 		e.preventDefault();

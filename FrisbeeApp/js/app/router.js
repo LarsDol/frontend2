@@ -13,9 +13,6 @@ FED2.AppRouter = Backbone.Router.extend({
 		var gameModel = new FED2.GameModel();
 		FED2.schedule = new FED2.ScheduleView({model: gameModel});
 		FED2.schedule.render();
-
-		console.log("showSchedule triggered");
-
 	},
 
 	showRanking: function () {
@@ -23,16 +20,11 @@ FED2.AppRouter = Backbone.Router.extend({
 		var teamModel = new FED2.TeamModel();
 		FED2.ranking = new FED2.PoolView({model: teamModel});
 		FED2.ranking.render();
-
-		console.log("showRanking triggered");
-
 	},
 
 	defaultAction: function () {
 		FED2.home = new FED2.HomeView();
 		FED2.home.render();
-		// We have no matching route, lets display the home page
-		console.log("defaultAction triggered");
 	}
 });
 

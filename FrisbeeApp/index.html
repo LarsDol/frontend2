@@ -47,7 +47,7 @@
     </div><!--/row-->
 
     <footer>
-      <p>Es el footér</p>
+      <p>Backbone applicatie door Lars Dol & Trystian Offerman. - Frontend 2</p>
     </footer>
   
   </div><!--/.fluid-container-->
@@ -58,10 +58,13 @@
   <script id="homeTemplate" type="text/template">
     <article class="span12">
       <section>
-        <h1>Default</h1>
-        <ul>
-          <li>Trolololol</li>
-        </ul>
+        <h1>Treesomes Frisbee Application</h1>
+
+        <article>
+        <h2> Welcome to the application of the Threesomes Frisbee Tournament <h2>
+        <h2>Select <a href="#/schedule">Schedule</a> to see the schedule of the tournament  </h2>
+        <h2>Select <a href="#/ranking">Ranking</a> to see the ranking of the tournament  </h2>
+        </article>
       </section>
     </article><!--/span-->
   </script>
@@ -84,7 +87,7 @@
 
 
       <ul id="gamestable">
-        <li class="game_heading">Games, pool X.</li>
+        <li class="game_heading">Games</li>
         <li class="loading">
           <div class="loader_container">
             <div class="loader"></div>
@@ -107,7 +110,7 @@
           </p>
         </div>
         <div class="score">
-          <p>
+          <p class="team1_score">
             <%= team_1_score %>
           </p>
         </div>
@@ -120,7 +123,7 @@
           </p>
         </div>
         <div class="score">
-          <p>
+          <p class="team2_score">
             <%= team_2_score %>
           </p>
         </div>
@@ -132,64 +135,146 @@
   <script id="poolTemplate" type="text/template">
     <article id="ranking">       
       <header>
-        <h1>Ranking</h1>
+        <h1>Pool A</h1>
       </header>
-      
-      <nav class="actions">
-        <ul>
-          <li id="filter">
-            <label>First team:</label>
-          
-          </li>
-        </ul>
-      </nav>
-
-
-      <ul id="gamestable">
-        <li class="game_heading">Pool D</li>
-        <li class="loading">
-          <div class="loader_container">
-            <div class="loader"></div>
-          </div>
-          <div class="load_text">Loading ranking...</div>
-        </li>
-      </ul>
+      <table id="rankingtable" class="ranking_template">
+        <div id="top">
+          <tr><strong> <td>Team: </td></strong> <td>Played:</td> <td>Wins:</td> <td>Losses:</td> <td>Points Scored:</td>  <td>Points Lost:</td>  <td>Saldo:</td> </tr>
+        </div>
+      </table>
     </article> 
+  </script>
+
+  <script id="teamTemplate" type="text/template"> 
+            
+   <td><strong><%= team.name %></strong></td>
+   <td><%= games_played %></td>
+   <td><%= wins %></td>
+   <td><%= losses %></td>
+   <td><%= points_scored %></td>
+   <td><%= points_allowed %></td>
+   <td <% if( points_scored > points_allowed) { %> class="positief" <% }
+   else{
+    %> class="negatief" <% 
+   }%>><%= plus_minus %></td>
+
   </script>
 
   <!-- SCORE FORM -->
   <script id="scoreTemplate" type="text/template">
       <form action="#" class="game_form">
+        <div class="score_buttons" id="top_buttons">
+          <% if(is_final == true){ %>
+            <span id="isFinal">Final score</span><span class="lock_closed"></span>
+          <% } else if (is_final == false){ %>
+            <span id="isNotFinal">This score is not final</span><span class="lock_open"></span>
+          <% } %>
+        </div>
         <table id="scoreTable">
           <thead>
             <tr>
-              <td>Set nummer</td>
+              <td>Game</td>
               <td id="name_team1"></td>
               <td id="name_team2"></td>
               <td></td>
             </tr>
           </thead>
           <tbody>
-            <% _.each(game_sets, function(set){ %>
-              <tr class="set">
-                <td><%= set.number %></td>
-                <td <% if( set.team_1_score > set.team_2_score) { %> class="winner" <% }%>><%= set.team_1_score %></td>
-                <td <% if( set.team_2_score  > set.team_1_score) { %> class="winner" <% }%>><%= set.team_2_score %></td>
-                <td><%= set.is_final %></td>
-              </tr>
-            <% }); %>
-            <% if(game_sets.length < 5){ %>
-              <tr>
-                <td><a id="newSet">Add new set</a></td>
-              </tr>
-            <% } %>
+              <% _.each(game_sets, function(set){ %>
+                <% if(set.is_final == true){ %>
+
+                  <tr class="set" setNumber="<%= set.number %>">
+                    <td><%= set.number %></td>
+                    <td id="team_1_score" <% if( set.team_1_score > set.team_2_score) { %> class="winner" <% }%>setNumber="<%= set.number %>">
+                      <%= set.team_1_score %>
+                    </td>
+                    <td id="team_2_score" <% if( set.team_2_score  > set.team_1_score) { %> class="winner" <% }%>setNumber="<%= set.number %>">
+                      <%= set.team_2_score %>
+                    </td>
+                    <td>
+                      <a href="#" class="lock_closed" id="unlockSet" setNumber="<%= set.number %>"></a>
+                    </td>
+                  </tr>
+
+                <% } else if (set.is_final == false){ %>
+                  <tr class="set" setNumber="<%= set.number %>">
+                    <td><%= set.number %></td>
+
+                    <% if(is_final == false){ %>
+                      <td id="team_1_score" <% if( set.team_1_score > set.team_2_score) { %> class="winner" <% }%> setNumber="<%= set.number %>">
+                        <select class="score_select" setNumber="<%= set.number %>">
+                            <option selected> <%= set.team_1_score %> </option>
+                          <% for(var s=0; s < 35; s++){ %>  
+                            <option> <%= s %> </option>
+                          <% } %>
+                        </select>
+                      </td>
+
+                    <% } else if(is_final == true){ %>
+                      <td id="team_1_score" <% if( set.team_1_score > set.team_2_score) { %> class="winner" <% }%> setNumber="<%= set.number %>">
+                        <%= set.team_1_score %>
+                      </td>
+                    <% } %>
+
+                    <% if(is_final == false){ %>                     
+                      <td id="team_2_score" <% if( set.team_2_score > set.team_1_score) { %> class="winner" <% }%> setNumber="<%= set.number %>">
+                        <select class="score_select" setNumber="<%= set.number %>">
+                            <option selected> <%= set.team_2_score %> </option>
+                          <% for(var s=0; s < 35; s++){ %>  
+                            <option> <%= s %> </option>
+                          <% } %>
+                        </select>
+                      </td>
+
+                    <% } else if(is_final == true){ %>
+                      <td id="team_2_score" <% if( set.team_2_score  > set.team_1_score) { %> class="winner" <% }%> setNumber="<%= set.number %>">
+                        <%= set.team_2_score %>
+                      </td>
+                    <% } %>
+
+                    <td>
+                      <a href="#" class="lock_open" id="lockSet" setNumber="<%= set.number %>"></a>
+                    </td>
+                  </tr>
+                <% } %>
+              <% }); %>
           </tbody>
         </table>
-
-        <span><%= is_final %></span>
-
-        <div class="clearfix"><input type="submit" id="update" value="Update" /></div>
+        <% if(is_final == false){ %>
+          <div class="score_buttons" id="bottom_buttons">
+          <% if(game_sets.length < 5){ %>
+            <button class="clean-gray" id="newSet">Add new game</button>
+          <% } %>
+            <button class="cupid-green" id="update">Save score</button>
+          </div>
+        <% } %>
       </form>
+  </script>
+
+    <!-- SCORE FORM -->
+  <script id="setTemplate" type="text/template">
+      <tr class="set" setNumber="<%= game_sets.length + 1 %>">
+        <td><%= game_sets.length + 1 %></td>
+        <td id="team_1_score" setNumber="<%= game_sets.length + 1 %>">
+          <select class="score_select">
+              <option selected> 0 </option>
+            <% for(var s=0; s < 35; s++){ %>  
+              <option> <%= s %> </option>
+            <% } %>
+          </select>
+        </td>
+        <td id="team_2_score" setNumber="<%= game_sets.length + 1 %>">
+          <select class="score_select">
+              <option selected> 0 </option>
+            <% for(var s=0; s < 35; s++){ %>  
+              <option> <%= s %> </option>
+            <% } %>
+          </select>
+        </td>
+        <td>
+          <a href="#" class="lock_open" id="lockSet" setNumber="<%= game_sets.length + 1 %>"></a>
+        </td>
+      </tr>
   </script>
 
   <!-- Libraries -->
