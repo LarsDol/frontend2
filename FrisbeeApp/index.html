@@ -183,7 +183,7 @@
               <% _.each(game_sets, function(set){ %>
                 <% if(set.is_final == true){ %>
 
-                  <tr class="set" setNumber="<%= set.number %>">
+                  <tr class="set" id="<%= set.number %>">
                     <td><%= set.number %></td>
                     <td id="team_1_score" <% if( set.team_1_score > set.team_2_score) { %> class="winner" <% }%>setNumber="<%= set.number %>">
                       <%= set.team_1_score %>
@@ -197,7 +197,7 @@
                   </tr>
 
                 <% } else if (set.is_final == false){ %>
-                  <tr class="set" setNumber="<%= set.number %>">
+                  <tr class="set" id="<%= set.number %>">
                     <td><%= set.number %></td>
 
                     <% if(is_final == false){ %>
@@ -253,7 +253,7 @@
 
     <!-- SCORE FORM -->
   <script id="setTemplate" type="text/template">
-      <tr class="set" setNumber="<%= game_sets.length + 1 %>">
+      <tr class="set" id="<%= game_sets.length + 1 %>">
         <td><%= game_sets.length + 1 %></td>
         <td id="team_1_score" setNumber="<%= game_sets.length + 1 %>">
           <select class="score_select">

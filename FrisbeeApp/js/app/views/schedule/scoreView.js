@@ -61,14 +61,49 @@ FED2.ScoreView = Backbone.View.extend({
 
 		var finalChecker = this.model.attributes.is_final;
 
-		var sets = this.model.attributes.game_sets;
-		for(var i = 0; i < sets.length; i++){
-			console.log(sets[i]);
-		}
-
-
 		if(finalChecker == false){
-			console.log($(this.el).find);
+			var sets = this.model.attributes.game_sets;
+
+			parent = $(this.el).parent();
+
+			var newScore1 = parseInt(parent.find('.team1_score').text());
+			var newScore2 = parseInt(parent.find('.team1_score').text());
+			console.log(sets.length);
+			for(var i = 0; i < sets.length; i++){
+				if(sets[i].is_final == false){
+					var tr = 'tr#'+ sets[i].number.toString();
+					var tr2 = $(this.el).find(tr);
+
+					var team_1_score = parseInt(tr2.find("#team_1_score").find("select").val());
+					var team_2_score = parseInt(tr2.find("#team_2_score").find("select").val());
+
+					var modelData = {
+			            "game_id": this.model.get('game_id'),
+					    "is_final": false,
+					    "team_1_score": team_1_score,
+			        	"team_2_score": team_2_score,
+					    "set_number": sets[i].number		    
+			        }
+
+			        this.updateScore(modelData);
+			        
+			        tr2.find("#team_1_score").html(team_1_score);
+					tr2.find("#team_2_score").html(team_2_score);
+
+					if(team_1_score > team_2_score){
+						newScore1 ++;
+
+					}else if(team_2_score > team_1_score){
+						newScore2 ++;
+					}
+
+			        console.log(modelData);
+				}
+			}
+			if(newScore1 != NaN && newScore2 != NaN){
+				parent.find('.team1_score').text(newScore1);
+				parent.find('.team2_score').text(newScore2);
+			}
 
 		}else{
 			console.log('Game score is Final');
