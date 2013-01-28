@@ -86,7 +86,6 @@ FED2.ScoreView = Backbone.View.extend({
 			        }
 
 			        this.updateScore(modelData);
-			        
 			        tr2.find("#team_1_score").html(team_1_score);
 					tr2.find("#team_2_score").html(team_2_score);
 
